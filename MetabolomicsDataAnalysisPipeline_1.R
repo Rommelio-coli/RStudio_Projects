@@ -162,7 +162,7 @@ volcano <- EnhancedVolcano(diffexp2,
                 gridlines.minor = FALSE,
                 colAlpha = 1,
                 legendPosition = 'right',
-                caption = bquote("Cutoffs:"~Log[2]~"fold change ± 0.58; p < 0.05")
+                caption = bquote("Cut-offs:"~Log[2]~"fold change ± 0.58; p < 0.05")
 )
 
 plot(volcano) +
