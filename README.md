@@ -10,3 +10,4 @@ You first have to generate a folder where all the MZmine files will be included:
   * FBMN_quant.csv: Raw feature quantification matrix for MS1 with associated MS1 (for Feature-Based Molecular Networking)
   * FBMN.mgf: Spectral file associated with FBMN_quant.csv (for Feature-Based Molecular Networking)
   * SIRIUS.mgf: Spectral file with isotopic information (For SIRIUS)
+In this section, MetaboAnalyst web server is used for multivariate statistics (PCA, heatmap, etc.)
