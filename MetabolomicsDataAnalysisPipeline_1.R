@@ -121,6 +121,7 @@ minFC <- abs(min(c(diffexp2$log2FoldChange)))
 maxFC <- max(c(diffexp2$log2FoldChange))
 up_count <- as.numeric(length(which(diffexp2$log2FoldChange > 0.58 & diffexp2$pvalue < 0.05)))
 down_count <- as.numeric(length(which(diffexp2$log2FoldChange < -0.58 & diffexp2$pvalue < 0.05)))
+peakcount <- as.numeric(length(diffexp$sample))
 if (maxFC > minFC) {
   loglim <- maxFC
 } else if (maxFC < minFC) {
@@ -149,8 +150,8 @@ volcano <- EnhancedVolcano(diffexp2,
                 xlim = c(-loglim - 0.2, loglim + 0.2),
                 ylim = c(0, maxp + 0.5),
                 title = 'T2DM vs Aged',
-                subtitle = '',
-                subtitleLabSize = 0,
+                subtitle = paste0("n = ", peakcount),
+                subtitleLabSize = 14,
                 pCutoff = 0.05,
                 FCcutoff = 0.58,
                 pointSize = 3.0,
@@ -161,6 +162,7 @@ volcano <- EnhancedVolcano(diffexp2,
                 gridlines.minor = FALSE,
                 colAlpha = 1,
                 legendPosition = 'right',
+                caption = bquote("Cutoffs:"~Log[2]~"fold change ± 0.58; p < 0.05")
 )
 
 plot(volcano) +
