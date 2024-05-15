@@ -117,10 +117,17 @@ diffexp2 = subset(diffexp, select = c("log2FoldChange", "pvalue"))
 diffexp2$log2FoldChange <- as.numeric(diffexp2$log2FoldChange)
 diffexp2$pvalue <- as.numeric(diffexp2$pvalue)
 maxp <- -log10(min(c(diffexp2$pvalue)))
-minFC <- min(c(diffexp2$log2FoldChange))
+minFC <- abs(min(c(diffexp2$log2FoldChange)))
 maxFC <- max(c(diffexp2$log2FoldChange))
 up_count <- as.numeric(length(which(diffexp2$log2FoldChange > 0.58 & diffexp2$pvalue < 0.05)))
 down_count <- as.numeric(length(which(diffexp2$log2FoldChange < -0.58 & diffexp2$pvalue < 0.05)))
+if (maxFC > minFC) {
+  loglim <- maxFC
+} else if (maxFC < minFC) {
+  loglim <- minFC
+} else {
+  loglim <- maxFC
+}
 
 #Set colors and cutoff values as needed
 keyvals <- ifelse(
@@ -139,8 +146,8 @@ volcano <- EnhancedVolcano(diffexp2,
                 x = 'log2FoldChange',
                 y = 'pvalue',
                 selectLab = rownames(diffexp2)[which(names(keyvals) %in% c('Down', 'Up'))],
-                xlim = c(minFC - 1, maxFC + 1),
-                ylim = c(0, maxp + 1),
+                xlim = c(-loglim - 0.2, loglim + 0.2),
+                ylim = c(0, maxp + 0.5),
                 title = 'T2DM vs Aged',
                 subtitle = '',
                 subtitleLabSize = 0,
@@ -161,11 +168,11 @@ plot(volcano) +
            fontface = 'bold',
            color = 'black',
            size  = 6,
-           label = up_count, x = floor(maxFC - 1), y = floor(maxp)) +
+           label = up_count, x =  -loglim*0.5, y = floor(maxp)) +
   annotate(geom = 'text',
            fontface = 'bold',
            color = 'black',
            size  = 6,
-           label = up_count, x = floor(maxFC - 1), y = floor(maxp))
+           label = down_count, x = loglim*0.5, y = floor(maxp))
 
            
