@@ -87,7 +87,7 @@ write.csv(x4, "diffexp.csv", row.names = FALSE)
 #Save "diffexp.csv" as "Text (tab delimited)" in Excel
 normalyzerDE(
   jobName = "DiffExp",
-  comparisons = c("T2DM-Aged"),
+  comparisons = c("T2DM-Aged"), #Set the groups you want to compare. The second one is the reference.
   designPath = "metadata.txt",
   dataPath = "diffexp.txt",
   experimentObj = NULL,
@@ -111,6 +111,7 @@ normalyzerDE(
 #  install.packages("BiocManager")
 #BiocManager::install("EnhancedVolcano")
 diffexp <- as.data.frame(read.delim("DiffExp\\DiffExp_stats.tsv" ,sep="\t"))
+#Choose the comparison you want to plot 
 names(diffexp) <- gsub(x = names(diffexp), pattern = "T2DM.Aged_PValue", replacement = "pvalue")  
 names(diffexp) <- gsub(x = names(diffexp), pattern = "T2DM.Aged_log2FoldChange", replacement = "log2FoldChange")  
 diffexp2 = subset(diffexp, select = c("log2FoldChange", "pvalue"))
